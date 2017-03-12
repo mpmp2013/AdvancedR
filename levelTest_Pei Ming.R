@@ -19,17 +19,16 @@ newdata <- melt(raw, id.vars= names(raw)[1:3], variable.name = "day",value.name 
 newdata2 = na.omit(newdata)
 newdata3 <- dcast(newdata2,year+month+day~element)
 dif <- newdata3$tmax - newdata3$tmin
+dif
 
 #45 min
 
-install.packages("hflights")
 library(hflights)
 str(hflights)
 library(plyr)
 Delaydata <- ddply(hflights,c("UniqueCarrier","Month"),summarise,
                    Qua = quantile(ArrDelay,0.1,na.rm=TRUE)
                    )
-Delaydata
 Delaydata2 <- ddply(Delaydata,c("UniqueCarrier"),summarise,
                     Mean = mean(Qua)
                     )
