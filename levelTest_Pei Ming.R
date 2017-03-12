@@ -10,7 +10,7 @@ findNum <- function(y,x,l){
 }
 findNum(y,1,2)
 
-#1 hour
+#1.5 hour
 
 
 raw <- read.delim("data/weather.txt",check.names = F, na.strings = ".")
@@ -21,3 +21,18 @@ newdata3 <- dcast(newdata2,year+month+day~element)
 dif <- newdata3$tmax - newdata3$tmin
 
 #45 min
+
+install.packages("hflights")
+library(hflights)
+str(hflights)
+library(plyr)
+Delaydata <- ddply(hflights,c("UniqueCarrier","Month"),summarise,
+                   Qua = quantile(ArrDelay,0.1,na.rm=TRUE)
+                   )
+Delaydata
+Delaydata2 <- ddply(Delaydata,c("UniqueCarrier"),summarise,
+                    Mean = mean(Qua)
+                    )
+Delaydata2
+
+#1.5 Hour
